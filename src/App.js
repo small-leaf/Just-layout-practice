@@ -1,24 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import Header from "./Header";
+import SideBar from "./SideBar";
+import Mail from "./Mail";
+import EmailList from "./EmailList";
+import SendMail from "./SendMail";
+import Login from "./Login";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSendMessageIsOpen } from "./redux/slices/mailSlice";
+import { login, selectUser } from "./redux/slices/userSlice";
+import { auth } from "./firebase";
 
 function App() {
+  const sendMessageIsOpen = useSelector(selectSendMessageIsOpen);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        dispatch(
+          login({
+            displayName: user.displayName,
+            email: user.email,
+            photoUrl: user.photoURL,
+          })
+        );
+      }
+    });
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      {!user ? (
+        <Login />
+      ) : (
+        <div className="App">
+          <Header />
+          <div className="app__body">
+            <SideBar />
+            <Switch>
+              <Route path="/mail">
+                <Mail />
+              </Route>
+              <Route path="/">
+                <EmailList />
+              </Route>
+            </Switch>
+          </div>
+          {sendMessageIsOpen && <SendMail />}
+        </div>
+      )}
+    </Router>
   );
 }
 
