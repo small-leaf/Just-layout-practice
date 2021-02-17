@@ -1,4 +1,4 @@
-- [Tasty](https://small-leaf.github.io/Just-practice/tasty)
+- [Tasty](https://small-leaf.github.io/Just-practice/tasty/index.html)
 - [Cocacola](https://small-leaf.github.io/Just-practice/cocacola)
 - [Starbucks](https://small-leaf.github.io/Just-practice/starbucks)
 - [Restaurant](http://restaurant.smallleaf.com.tw/)
