@@ -45,7 +45,7 @@
 					window.__lc = window.__lc || {};
 					window.__lc.license = uniqueKey;
 					const loaded = () => {
-						if (window.LiveChatWidget) {
+						if (window.LiveChatWidget._h) {
 							setTimeout(() => {
 								if (show) this.forceOpen(uniqueKey);
 							}, 1000);
