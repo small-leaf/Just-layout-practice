@@ -9,13 +9,13 @@
 <body>
     <section>
         <div>
-            <button class="testBtn1" onclick="buttonOne()">click1</button>
+            <button class="testBtn1" onclick="button1()">click1</button>
         </div>
         <div>
-            <button class=testBtn2 onclick="buttonTwo()" >click2</button>
+            <button class=testBtn2 onclick="button2()" >click2</button>
         </div>
         <div>
-            <button class=testBtn3>click3</button>
+            <button class=testBtn3 onclick="button3()" >click3</button>
         </div>
         <div>
             <button class=testBtn4>click4</button>
@@ -209,9 +209,9 @@
     
             }
         ]
-        function buttonOne () { _switchCustomerService(livechat, null, customerServiceList, true) } 
-        function buttonTwo () { _switchCustomerService(respondio, null, customerServiceList, false) }
-        function buttonTwo () { _switchCustomerService(livechat, 'livechat', customerServiceList, false) }
+        function button1 () { _switchCustomerService(livechat, null, customerServiceList, true) } 
+        function button2 () { _switchCustomerService(respondio, null, customerServiceList, false) }
+        function button3 () { _switchCustomerService(livechat, 'livechat', customerServiceList, false) }
         // let testBtn1 = document.querySelector('testBtn1')
         // let testBtn2 = document.querySelector('testBtn2')
         // testBtn1.addEventListener("click", () => {
