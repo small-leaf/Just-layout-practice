@@ -173,7 +173,7 @@
                 targetIframe = allIframe.filter(node => node.title == 'LiveChat chat widget');
                 if (targetIframe.length > 0) {
                     isFound = true;
-                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`;
+                    return customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
                 } else {
                     isFound = false;
                 }
@@ -192,10 +192,6 @@
 				}
             } else {
             	// 檢查新的有沒有存在 有就顯示 沒有就重載入
-				if (newCustomerService[0] === 'livechat') {
-					return customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
-				}
-
 				customerServiceMapping(newCustomerService[0], 'unset');
 				customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
             }
