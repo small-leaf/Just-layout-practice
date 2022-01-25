@@ -47,7 +47,7 @@
 					const loaded = () => {
 						if (window.LiveChatWidget) {
 							setTimeout(() => {
-								if (show) this.forceOpen();
+								if (show) this.forceOpen(uniqueKey);
 							}, 1000);
 							return;
 						}
@@ -90,11 +90,14 @@
 						n.LiveChatWidget = n.LiveChatWidget || e;
 					}(window, document, [].slice))
 				},
-				forceOpen() {
+				forceOpen(uniqueKey) {
 					let op = () => {
+						if (!window.LiveChatWidget) {
+							this.preload(uniqueKey)
+							this.open(uniqueKey);
+						};
 						let { visibility } = window.LiveChatWidget.get("state"); // 'maximized' | 'minimized' | 'hidden'
 						console.log('forceOpen stage', 'visibility', visibility)
-						if (!window.LiveChatWidget) return;
 						if (visibility === 'maximized') return;
 						window.LiveChatWidget.call("maximize");
 						setTimeout(op, 1000);
