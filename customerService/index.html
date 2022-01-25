@@ -173,7 +173,7 @@
                 targetIframe = allIframe.filter(node => node.title == 'LiveChat chat widget');
                 if (targetIframe.length > 0) {
                     isFound = true;
-                    return customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
+                    return customerServiceList[targetCustomerService].open(newCustomerService[1][property]);
                 } else {
                     isFound = false;
                 }
