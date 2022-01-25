@@ -29,25 +29,24 @@
 				open(uniqueKey) {
 					if (window.LiveChatWidget) {
 						const { visibility } = window.LiveChatWidget.get("state"); // 'maximized' | 'minimized' | 'hidden'
+						console.log('open stage in if', 'visibility', visibility)
 						if (visibility !== 'maximized') {
 							window.LiveChatWidget.call("maximize");
 						} else {
 							window.LiveChatWidget.call("hide");
 						}
 					} else {
+						console.log('open stage in else')
 						// 引入Live Chat
 						this.preload(uniqueKey, true);
 					}
 				},
 				preload(uniqueKey, show = false) {
-					store.commit('setRootState', { customerService: 'livechat' });
 					window.__lc = window.__lc || {};
 					window.__lc.license = uniqueKey;
-					store.dispatch('actionSwitchLoading', true);
 					const loaded = () => {
 						if (window.LiveChatWidget) {
 							setTimeout(() => {
-								store.dispatch('actionSwitchLoading', false);
 								if (show) this.forceOpen();
 							}, 1000);
 							return;
@@ -94,6 +93,7 @@
 				forceOpen() {
 					let op = () => {
 						let { visibility } = window.LiveChatWidget.get("state"); // 'maximized' | 'minimized' | 'hidden'
+						console.log('forceOpen stage', 'visibility', visibility)
 						if (!window.LiveChatWidget) return;
 						if (visibility === 'maximized') return;
 						window.LiveChatWidget.call("maximize");
@@ -104,7 +104,6 @@
             },
             respondio: {
                 preload(urlKey) {
-                    store.dispatch('actionSwitchLoading', true);
                     const checkScript = document.getElementById('respondio__widget');
                     let s1 = document.createElement("script");
                     let s0 = document.getElementsByTagName("script")[0];
