@@ -187,7 +187,7 @@
             customerServiceMapping(newCustomerService[0], 'unset');
             if (isPreload) {
                 if (!isFound) {
-                customerServiceList[newCustomerService[0]].preload(newCustomerService[1][property]);
+                    customerServiceList[newCustomerService[0]].preload(newCustomerService[1][property]);
                 }
             }
             } else {
@@ -211,6 +211,7 @@
         ]
         function buttonOne () { _switchCustomerService(livechat, null, customerServiceList, true) } 
         function buttonTwo () { _switchCustomerService(respondio, null, customerServiceList, false) }
+        function buttonTwo () { _switchCustomerService(livechat, 'livechat', customerServiceList, false) }
         // let testBtn1 = document.querySelector('testBtn1')
         // let testBtn2 = document.querySelector('testBtn2')
         // testBtn1.addEventListener("click", () => {
