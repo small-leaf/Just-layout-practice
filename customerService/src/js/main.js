@@ -63,7 +63,7 @@ const _switchCustomerService = (newCustomerService, oldCustomerService, customer
       customerServiceMapping(newCustomerService[0], 'unset');
       if (isPreload) {
         if (!isFound) {
-          customerServiceList[newCustomerService[0]].preload('12991488');
+          customerServiceList[newCustomerService[0]].preload(newCustomerService[1][property]);
         }
       }
     } else {

@@ -9,10 +9,10 @@
 <body>
     <section>
         <div class=testBtn1>
-            <button onClick="button1">click1</button>
+            <button onClick="buttonOne()">click1</button>
         </div>
         <div class=testBtn2>
-            <button onClick="button2">click2</button>
+            <button onClick="buttonTwo()">click2</button>
         </div>
         <div class=testBtn3>
             <button>click3</button>
@@ -24,8 +24,21 @@
     <script src="./src/js/main.js"></script>
     <script>
         import customerServiceList from './customerService/index'
-        const button1 = () => _switchCustomerService('livechat', null, customerServiceList, false)
-        const button2 = () => _switchCustomerService('respondio', null, customerServiceList, false)
+        const livechat = [
+            'livechat',
+            {
+                uniqueKey: 12991488,
+            }
+        ]
+        const respondio = [
+            'respondio',
+            {
+                url: "https://cdn.respond.io/webchat/widget/widget.js?cId=502d2e7883909f762888903f142b628a5097e5ba8ad9b9c8073c0a2aeca7607a",
+
+            }
+        ]
+        function buttonOne() { _switchCustomerService(livechat, null, customerServiceList, false) } 
+        function buttonTwo() { _switchCustomerService(respondio, null, customerServiceList, false) }
     </script>
 </body>
 </html>
