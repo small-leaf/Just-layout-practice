@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <div class=testBtn1>
+            <button onClick="button1">click1</button>
+        </div>
+        <div class=testBtn2>
+            <button onClick="button2">click2</button>
+        </div>
+        <div class=testBtn3>
+            <button>click3</button>
+        </div>
+        <div class=testBtn4>
+            <button>click4</button>
+        </div>
+    </section>
+    <script src="./src/js/main.js"></script>
+    <script>
+        import customerServiceList from './customerService/index'
+        const button1 = () => _switchCustomerService('livechat', null, customerServiceList, false)
+        const button2 = () => _switchCustomerService('respondio', null, customerServiceList, false)
+    </script>
+</body>
+</html>
