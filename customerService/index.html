@@ -198,6 +198,10 @@
             }
             } else {
             // 檢查新的有沒有存在 有就顯示 沒有就重載入
+				if (newCustomerService[0] === 'livechat') {
+					customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
+				}
+
             customerServiceMapping(newCustomerService[0], 'unset');
             customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
             }
