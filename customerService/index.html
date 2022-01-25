@@ -184,22 +184,20 @@
             }
         
             if (newCustomerService[0] !== oldCustomerService) {
-            // 隱藏舊的開新的
-            customerServiceMapping(oldCustomerService, 'none');
-            customerServiceMapping(newCustomerService[0], 'unset');
-            if (isPreload) {
-                if (!isFound) {
-                    customerServiceList[newCustomerService[0]].preload(newCustomerService[1][property]);
-                }
-            }
+           		 // 隱藏舊的開新的
+				customerServiceMapping(oldCustomerService, 'none');
+				customerServiceMapping(newCustomerService[0], 'unset');
+				if (!isFound) {
+					customerServiceList[newCustomerService[0]].preload(newCustomerService[1][property]);
+				}
             } else {
-            // 檢查新的有沒有存在 有就顯示 沒有就重載入
+            	// 檢查新的有沒有存在 有就顯示 沒有就重載入
 				if (newCustomerService[0] === 'livechat') {
 					return customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
 				}
 
-            customerServiceMapping(newCustomerService[0], 'unset');
-            customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
+				customerServiceMapping(newCustomerService[0], 'unset');
+				customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
             }
         }
         const livechat = [
