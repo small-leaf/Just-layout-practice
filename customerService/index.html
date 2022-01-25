@@ -45,7 +45,7 @@
 					window.__lc = window.__lc || {};
 					window.__lc.license = uniqueKey;
 					const loaded = () => {
-						if (window.LiveChatWidget._h) {
+						if (window.LiveChatWidget) {
 							setTimeout(() => {
 								if (show) this.forceOpen(uniqueKey);
 							}, 1000);
@@ -93,10 +93,6 @@
 				},
 				forceOpen(uniqueKey) {
 					let op = () => {
-						if (!window.LiveChatWidget) {
-							this.preload(uniqueKey)
-							this.open(uniqueKey);
-						};
 						let { visibility } = window.LiveChatWidget.get("state"); // 'maximized' | 'minimized' | 'hidden'
 						console.log('forceOpen stage', 'visibility', visibility)
 						if (visibility === 'maximized') return;
