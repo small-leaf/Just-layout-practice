@@ -8,22 +8,194 @@
 </head>
 <body>
     <section>
-        <div class=testBtn1>
-            <button onClick="buttonOne()">click1</button>
+        <div>
+            <button class="testBtn1" onclick="buttonOne()">click1</button>
         </div>
-        <div class=testBtn2>
-            <button onClick="buttonTwo()">click2</button>
+        <div>
+            <button class=testBtn2 onclick="buttonTwo()" >click2</button>
         </div>
-        <div class=testBtn3>
-            <button>click3</button>
+        <div>
+            <button class=testBtn3>click3</button>
         </div>
-        <div class=testBtn4>
-            <button>click4</button>
+        <div>
+            <button class=testBtn4>click4</button>
         </div>
     </section>
-    <script src="./src/js/main.js"></script>
+    <!-- <script src="./src/js/main.js"></script>
+    <script src="./src/js/customerService"></script> -->
     <script>
-        import customerServiceList from './customerService/index'
+        const customerServiceList = {
+            livechat: {
+                open(uniqueKey) {
+                    if (window.LiveChatWidget) {
+                    const { visibility } = window.LiveChatWidget.get("state"); // 'maximized' | 'minimized' | 'hidden'
+                    if (visibility !== 'maximized') {
+                        window.LiveChatWidget.call("maximize");
+                    } else {
+                        window.LiveChatWidget.call("hide");
+                    }
+                    } else {
+                    // 引入Live Chat
+                    this.preload(uniqueKey, true);
+                    }
+                },
+                preload(uniqueKey, show = false) {
+                    window.__lc = window.__lc || {};
+                    window.__lc.license = uniqueKey;
+                    const loaded = () => {
+                    if (window.LiveChatWidget) {
+                        setTimeout(() => {
+                        if (show) this.forceOpen();
+                        }, 1000);
+                        return;
+                    }
+                    setTimeout(loaded, 500);
+                    }
+                    // ;(function(n,t,c){function i(n){return e._h?e._h.apply(null,n):e._q.push(n)}var e={_q:[],_h:null,_v:"2.0",on:function(){i(["on",c.call(arguments)])},once:function(){i(["once",c.call(arguments)])},off:function(){i(["off",c.call(arguments)])},get:function(){if(!e._h)throw new Error("[LiveChatWidget] You can't use getters before load.");return i(["get",c.call(arguments)])},call:function(){i(["call",c.call(arguments)])},init:function(){var n=t.createElement("script");n.async=!0,n.type="text/javascript",n.src="https://cdn.livechatinc.com/tracking.js",t.head.appendChild(n)}};!n.__lc.asyncInit&&e.init(),n.LiveChatWidget=n.LiveChatWidget||e}(window,document,[].slice))
+                    (function livechatfn(n, t, c) {
+                    let e;
+                    function iLivechatfn(n) { return e._h ? e._h.apply(null, n) : e._q.push(n) }
+                    e = {
+                        _q: [],
+                        _h: null,
+                        _v: "2.0",
+                        on: function iLivechatfnOn() {
+                        iLivechatfn(["on", c.call(arguments)])
+                        },
+                        once: function iLivechatfnOnce() {
+                        iLivechatfn(["once", c.call(arguments)])
+                        },
+                        off: function iLivechatfnOff() {
+                        iLivechatfn(["off", c.call(arguments)])
+                        },
+                        get: function iLivechatfnGet() {
+                        if (!e._h) throw new Error("[LiveChatWidget] You can't use getters before load.");
+                        return iLivechatfn(["get", c.call(arguments)])
+                        },
+                        call: function iLivechatfnCall() {
+                        iLivechatfn(["call", c.call(arguments)])
+                        },
+                        init: function iLivechatfnInit() {
+                        let n = t.createElement("script");
+                        n.async = !0;
+                        n.type = "text/javascript";
+                        n.src = "https://cdn.livechatinc.com/tracking.js";
+                        n.onload = loaded;
+                        t.head.appendChild(n)
+                        }
+                    };
+                    !n.__lc.asyncInit && e.init();
+                    n.LiveChatWidget = n.LiveChatWidget || e;
+                    }(window, document, [].slice))
+                },
+                forceOpen() {
+                    let op = () => {
+                    let { visibility } = window.LiveChatWidget.get("state"); // 'maximized' | 'minimized' | 'hidden'
+                    if (!window.LiveChatWidget) return;
+                    if (visibility === 'maximized') return;
+                    window.LiveChatWidget.call("maximize");
+                    setTimeout(op, 1000);
+                    }
+                    op();
+                },
+            },
+            respondio: {
+                preload(urlKey) {
+                    store.dispatch('actionSwitchLoading', true);
+                    const checkScript = document.getElementById('respondio__widget');
+                    let s1 = document.createElement("script");
+                    let s0 = document.getElementsByTagName("script")[0];
+                    s1.async = true;
+                    s1.setAttribute("id", "respondio__widget");
+                    s1.type = 'text/javascript';
+                    s1.src = urlKey;
+                    if (!checkScript) {
+                        setTimeout(() => {
+                            s0.parentNode.insertBefore(s1,s0);
+                            window.location.hash = '#webchat_widget';
+                        }, 1000);
+                    }
+                },
+                open(urlKey) {
+                    this.preload(urlKey);
+                }
+            }
+        }
+        function _switchCustomerService(newCustomerService, oldCustomerService, customerServiceList, isPreload) {
+            console.log('newCustomerService', newCustomerService, 'oldCustomerService', oldCustomerService, 'customerServiceList',customerServiceList, 'isPreload', isPreload)
+            let property;
+            let isFound = false;
+            switch (newCustomerService[0]) {
+            case 'livechat':
+                property = 'uniqueKey';
+                break;
+            // jivo, tawk, zendesk
+            default:
+                property = 'url';
+            }
+        
+            const customerServiceMapping = (targetCustomerService, displayValue) => {
+            let allIframe = Array.apply(null, document.querySelectorAll('iframe'));
+            let targetIframe;
+            switch(targetCustomerService) {
+                case 'tawk':
+                targetIframe = allIframe.filter(node => node.title == 'chat widget');
+                if (targetIframe.length > 0) {
+                    isFound = true;
+                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`
+                } else {
+                    isFound = false;
+                }
+                break;
+                case 'jivo':
+                targetIframe = allIframe.filter(node => node.title == 'Jivochat');
+                let targetTag = document.querySelector('jdiv');
+                if (targetIframe.length > 0 && targetTag) {
+                    isFound = true;
+                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`;
+                    targetTag.style = `display: ${displayValue} !important`;
+                } else {
+                    isFound = false;
+                }
+                break;
+                case 'respondio':
+                targetIframe = allIframe.filter(node => node.title == 'Webchat Widget');
+                if (targetIframe.length > 0) {
+                    isFound = true;
+                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`;
+                } else {
+                    isFound = false;
+                }
+                break;
+                case 'livechat':
+                targetIframe = allIframe.filter(node => node.title == 'LiveChat chat widget');
+                if (targetIframe.length > 0) {
+                    isFound = true;
+                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`;
+                } else {
+                    isFound = false;
+                }
+                break;
+                default:
+                break;
+            }
+            }
+        
+            if (newCustomerService[0] !== oldCustomerService) {
+            // 隱藏舊的開新的
+            customerServiceMapping(oldCustomerService, 'none');
+            customerServiceMapping(newCustomerService[0], 'unset');
+            if (isPreload) {
+                if (!isFound) {
+                customerServiceList[newCustomerService[0]].preload(newCustomerService[1][property]);
+                }
+            }
+            } else {
+            // 檢查新的有沒有存在 有就顯示 沒有就重載入
+            customerServiceMapping(newCustomerService[0], 'unset');
+            customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
+            }
+        }
         const livechat = [
             'livechat',
             {
@@ -34,11 +206,20 @@
             'respondio',
             {
                 url: "https://cdn.respond.io/webchat/widget/widget.js?cId=502d2e7883909f762888903f142b628a5097e5ba8ad9b9c8073c0a2aeca7607a",
-
+    
             }
         ]
-        function buttonOne() { _switchCustomerService(livechat, null, customerServiceList, false) } 
-        function buttonTwo() { _switchCustomerService(respondio, null, customerServiceList, false) }
+        function buttonOne () { _switchCustomerService(livechat, null, customerServiceList, true) } 
+        function buttonTwo () { _switchCustomerService(respondio, null, customerServiceList, false) }
+        // let testBtn1 = document.querySelector('testBtn1')
+        // let testBtn2 = document.querySelector('testBtn2')
+        // testBtn1.addEventListener("click", () => {
+        //     buttonOne()
+        // })
+        // testBtn2.addEventListener("click", () => {
+        //     buttonTwo()
+        // })
+        
     </script>
 </body>
 </html>
