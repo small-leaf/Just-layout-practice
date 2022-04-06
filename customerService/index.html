@@ -14,12 +14,6 @@
         <div>
             <button class=testBtn2 onclick="button2()" >click2</button>
         </div>
-        <div>
-            <button class=testBtn3 onclick="button3()" >click3</button>
-        </div>
-        <div>
-            <button class=testBtn4 onclick="button4()" >click4</button>
-        </div>
     </section>
     <!-- <script src="./src/js/main.js"></script>
     <script src="./src/js/customerService"></script> -->
@@ -123,81 +117,6 @@
                 }
             }
         }
-        function _switchCustomerService(newCustomerService, oldCustomerService, customerServiceList, isPreload = false) {
-            console.log('newCustomerService', newCustomerService, 'oldCustomerService', oldCustomerService, 'customerServiceList',customerServiceList, 'isPreload', isPreload)
-            let property;
-            let isFound = false;
-            switch (newCustomerService[0]) {
-            case 'livechat':
-                property = 'uniqueKey';
-                break;
-            // jivo, tawk, zendesk
-            default:
-                property = 'url';
-            }
-        
-            const customerServiceMapping = (targetCustomerService, displayValue) => {
-            let allIframe = Array.apply(null, document.querySelectorAll('iframe'));
-            let targetIframe;
-            switch(targetCustomerService) {
-                case 'tawk':
-                targetIframe = allIframe.filter(node => node.title == 'chat widget');
-                if (targetIframe.length > 0) {
-                    isFound = true;
-                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`
-                } else {
-                    isFound = false;
-                }
-                break;
-                case 'jivo':
-                targetIframe = allIframe.filter(node => node.title == 'Jivochat');
-                let targetTag = document.querySelector('jdiv');
-                if (targetIframe.length > 0 && targetTag) {
-                    isFound = true;
-                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`;
-                    targetTag.style = `display: ${displayValue} !important`;
-                } else {
-                    isFound = false;
-                }
-                break;
-                case 'respondio':
-                targetIframe = allIframe.filter(node => node.title == 'Webchat Widget');
-                if (targetIframe.length > 0) {
-                    isFound = true;
-                    targetIframe[0].parentNode.style = `display: ${displayValue} !important`;
-                } else {
-                    isFound = false;
-                }
-                break;
-                case 'livechat':
-                targetIframe = allIframe.filter(node => node.title == 'LiveChat chat widget');
-                if (targetIframe.length > 0) {
-                    isFound = true;
-                    return customerServiceList[targetCustomerService].open(newCustomerService[1][property]);
-                } else {
-                    isFound = false;
-                }
-                break;
-                default:
-                break;
-            }
-            }
-        
-            if (newCustomerService[0] !== oldCustomerService) {
-           		 // 隱藏舊的開新的
-				customerServiceMapping(oldCustomerService, 'none');
-				customerServiceMapping(newCustomerService[0], 'unset');
-				if (isPreload) {
-					if (!isFound) {
-						customerServiceList[newCustomerService[0]].preload(newCustomerService[1][property]);
-					}
-				}
-            } else {
-            	// 檢查新的有沒有存在 有就顯示 沒有就重載入
-				customerServiceMapping(newCustomerService[0], 'unset');
-				customerServiceList[newCustomerService[0]].open(newCustomerService[1][property]);
-            }
-        }
         const livechat = [
             'livechat',
             {
@@ -208,13 +127,11 @@
             'respondio',
             {
                 url: "https://cdn.respond.io/webchat/widget/widget.js?cId=502d2e7883909f762888903f142b628a5097e5ba8ad9b9c8073c0a2aeca7607a",
-    
+
             }
         ]
-        function button1 () { _switchCustomerService(livechat, null, customerServiceList, true) } 
-        function button2 () { _switchCustomerService(respondio, 'livechat', customerServiceList, false) }
-        function button3 () { _switchCustomerService(livechat, 'respondio', customerServiceList, false) }
-        function button4 () { _switchCustomerService(respondio, 'livechat', customerServiceList, true) }
+        function button1 () { customerServiceList.livechat.preload(12991488, true) }
+        function button2 () { customerServiceList.livechat.open(12991488)}
         // let testBtn1 = document.querySelector('testBtn1')
         // let testBtn2 = document.querySelector('testBtn2')
         // testBtn1.addEventListener("click", () => {
@@ -223,7 +140,7 @@
         // testBtn2.addEventListener("click", () => {
         //     buttonTwo()
         // })
-        
+
     </script>
 </body>
 </html>
