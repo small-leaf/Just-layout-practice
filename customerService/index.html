@@ -123,12 +123,13 @@
 						preload(uniqueKey) {
 							let root = document.createElement("div");
 							root.setAttribute("id", "fb-root");
-							let chatbox = document.createElement('fb-customer-chat');
+							let chatbox = document.createElement("div");
+							chatbox.setAttribute("id", "fb-customer-chat");
 							chatbox.setAttribute("page_id", uniqueKey);
 							chatbox.setAttribute("attribution", "biz_inbox");
 							let s0 = document.getElementsByTagName("script")[0];
-							s0.parentNode.insertBefore(root,s0);
-							s0.parentNode.insertBefore(chat,s0);
+							s0.parentNode.insertBefore(root, s0);
+							s0.parentNode.insertBefore(chatbox, s0);
 							window.fbAsyncInit = function() {
 								FB.init({
 									xfbml: true,
