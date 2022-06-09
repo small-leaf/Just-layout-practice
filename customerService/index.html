@@ -135,7 +135,7 @@
 							let chat = document.createElement("div");
 							chat.setAttribute("id", "fb-customer-chat");
 							chat.className = "fb-customerchat";
-							const chatbox = document.getElementById('fb-customer-chat');
+							let chatbox = document.getElementById('fb-customer-chat');
 							chatbox.setAttribute("page_id", uniqueKey);
 							chatbox.setAttribute("attribution", "biz_inbox");
 							let s1 = document.createElement("script");
@@ -147,7 +147,7 @@
 							s0.parentNode.insertBefore(root,s0);
 							s0.parentNode.insertBefore(chat,s0);
 							s0.parentNode.insertBefore(s1,s0);
-							window.fbAsyncInit = function() {
+														window.fbAsyncInit = function() {
 								FB.init({
 									xfbml: true,
 									version: 'v13.0'
@@ -175,12 +175,12 @@
 				const fb = [
 					'fb',
 					{
-						uniqueKey: 547536726824549,
+						uniqueKey: 105782932135108,
 					}
 				]
         function button1 () { customerServiceList.livechat.preload(12991488, true) }
         function button2 () { customerServiceList.livechat.open(12991488)}
-        function button3 () { customerServiceList.fb.preload(547536726824549)}
+        function button3 () { customerServiceList.fb.preload(105782932135108)}
         // let testBtn1 = document.querySelector('testBtn1')
         // let testBtn2 = document.querySelector('testBtn2')
         // testBtn1.addEventListener("click", () => {
