@@ -123,13 +123,21 @@
 						preload(uniqueKey) {
 							let root = document.createElement("div");
 							root.setAttribute("id", "fb-root");
-							let chatbox = document.createElement("div");
-							chatbox.setAttribute("id", "fb-customer-chat");
-							chatbox.setAttribute("page_id", uniqueKey);
-							chatbox.setAttribute("attribution", "biz_inbox");
+							let chat = document.createElement("div");
+							chat.setAttribute("id", "fb-customer-chat");
+							chat.className = "fb-customerchat";
 							let s0 = document.getElementsByTagName("script")[0];
 							s0.parentNode.insertBefore(root, s0);
-							s0.parentNode.insertBefore(chatbox, s0);
+							s0.parentNode.insertBefore(chat, s0);
+
+							let s1 = document.createElement("script");
+							s1.innerHTML(`
+								var chatbox = document.getElementById('fb-customer-chat');
+								chatbox.setAttribute("page_id", "105782932135108");
+								chatbox.setAttribute("attribution", "biz_inbox");
+							`)
+							s0.parentNode.insertBefore(s1, s0);
+
 							window.fbAsyncInit = function() {
 								FB.init({
 									xfbml: true,
@@ -137,6 +145,8 @@
 								});
 							};
 							(function(d, s, id) {
+								console.log('js', js, 'fjs', fjs)
+        				console.log('d.getElementById(id)', d.getElementById(id))
 								var js, fjs = d.getElementsByTagName(s)[0];
 								if (d.getElementById(id)) return;
 								js = d.createElement(s); js.id = id;
