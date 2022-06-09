@@ -130,13 +130,9 @@
 							s0.parentNode.insertBefore(root, s0);
 							s0.parentNode.insertBefore(chat, s0);
 
-							let s1 = document.createElement("script");
-							s1.innerHTML(`
-								var chatbox = document.getElementById('fb-customer-chat');
-								chatbox.setAttribute("page_id", "105782932135108");
-								chatbox.setAttribute("attribution", "biz_inbox");
-							`)
-							s0.parentNode.insertBefore(s1, s0);
+							var chatbox = document.getElementById('fb-customer-chat');
+							chatbox.setAttribute("page_id", "105782932135108");
+							chatbox.setAttribute("attribution", "biz_inbox");
 
 							window.fbAsyncInit = function() {
 								FB.init({
