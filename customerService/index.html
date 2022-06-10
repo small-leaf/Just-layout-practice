@@ -127,11 +127,11 @@
 							if (window.FB) {
 								window.FB.CustomerChat.show();
 							} else {
-								this.preload(uniqueKey, true);
+								this.preload(uniqueKey);
 							}
 						},
-						preload(uniqueKey, show = false) {
-							console.log('loading = true');
+						preload(uniqueKey) {
+							if (window.FB) return;
 							let root = document.createElement("div");
 							root.setAttribute("id", "fb-root");
 							let chat = document.createElement("div");
@@ -142,7 +142,7 @@
 							s0.parentNode.insertBefore(chat, s0);
 
 							let chatbox = document.getElementById('fb-customer-chat');
-							chatbox.setAttribute("page_id", "105782932135108");
+							chatbox.setAttribute("page_id", uniqueKey);
 							chatbox.setAttribute("attribution", "biz_inbox");
 
 							const fbShow = () => {
